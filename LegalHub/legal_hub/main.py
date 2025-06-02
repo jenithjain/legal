@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Configure Google Generative AI with hardcoded API key
-genai.configure(api_key="AIzaSyBCYFsbfP8TDXVsX7Mbg7gjg_TCMrdfyDM")
+genai.configure(api_key="***********************************8")
 
 # Pydantic schemas
 class QueryRequest(BaseModel):
