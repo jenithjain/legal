@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalAI - AI-Powered Legal Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .dashboard {
+            height: 100vh;
+            display: flex;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            opacity: 1;
+        }
+
+        .nav-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 5px 10px;
+        }
+
+        .nav-text {
+            margin-left: 15px;
+            opacity: 1;
+        }
+
+        /* Main Content - adjust to accommodate fixed sidebar */
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Remove hover-related styles */
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar:hover .logo {
+            opacity: 1;
+        }
+
+        .sidebar:hover .nav-text {
+            opacity: 1;
+        }
+
+        /* Update responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .nav-text, .logo {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+        }
+
+        .profile-section {
+            margin-top: auto;
+            padding: 20px;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Cards Section */
+        .cards-section {
+            width: 420px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .contract-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .chat-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .summary-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .card-description {
+            color: #718096;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #718096;
+        }
+
+        .file-input-label:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-input-label i {
+            margin-right: 8px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-secondary { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .btn-tertiary { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+
+        .loading {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: #718096;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e2e8f0;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result.success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+            color: #2f855a;
+        }
+
+        .result.error {
+            background: rgba(245, 101, 101, 0.1);
+            border: 1px solid rgba(245, 101, 101, 0.2);
+            color: #c53030;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .results-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 100%;
+        }
+
+        .results-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results-content {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #a0aec0;
+            padding: 60px 20px;
+        }
+
+        .placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar:hover {
+                width: 60px;
+            }
+
+            .nav-text, .logo {
+                display: none;
+            }
+
+            .content-area {
+                flex-direction: column;
+            }
+
+            .cards-section {
+                width: 100%;
+                height: 50%;
+            }
+
+            .results-panel {
+                height: 50%;
+            }
+        }
+
+        /* Animation Classes */
+        .fadeIn {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">LegalAI</div>
+            
+            <a href="http://127.0.0.1:8000/contract-review.html" class="nav-item active">
+                <i class="fas fa-file-contract"></i>
+                <span class="nav-text">Contract Review</span>
+            </a>
+            
+            <a href="http://127.0.0.1:8000/chatbot.html" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span class="nav-text">Legal Chatbot</span>
+            </a>
+            
+            <a href="http://127.0.0.1:8000/summarizer.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-text">Summarization</span>
+            </a>
+            
+            <a href="index.html" class="nav-item active">
+                <i class="fas fa-chart-line"></i>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Dashboard</h1>
+                    <div class="header-subtitle">Your Legal AI Activity Overview</div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- Dashboard Content -->
+                <div class="cards-section">
+                    <!-- Daily Engagement Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon contract-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="card-title">Daily Engagement</div>
+                        </div>
+                        <div class="card-description">
+                            Your activity statistics and usage metrics
+                        </div>
+                        <!-- Add your engagement metrics here -->
+                    </div>
+
+                    <!-- Recent Documents Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon summary-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div class="card-title">Recent Documents</div>
+                        </div>
+                        <div class="card-description">
+                            Recently uploaded and analyzed documents
+                        </div>
+                        <!-- Add your recent documents list here -->
+                    </div>
+                </div>
+
+                <!-- Activity Panel -->
+                <div class="results-panel">
+                    <div class="results-container">
+                        <div class="results-title">
+                            <i class="fas fa-activity"></i>
+                            Activity Overview
+                        </div>
+                        <div class="results-content">
+                            <!-- Add your detailed activity content here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

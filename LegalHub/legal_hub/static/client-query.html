@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Chatbot - LegalAI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">LegalAI</div>
+            
+            <a href="contract-review.html" class="nav-item">
+                <i class="fas fa-file-contract"></i>
+                <span class="nav-text">Contract Review</span>
+            </a>
+            
+            <a href="client-query.html" class="nav-item active">
+                <i class="fas fa-comments"></i>
+                <span class="nav-text">Legal Chatbot</span>
+            </a>
+            
+            <a href="summarizer.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-text">Summarization</span>
+            </a>
+            
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Legal Chatbot</h1>
+                <div class="header-subtitle">AI-powered legal consultation</div>
+            </div>
+            
+            <div class="content-area">
+                <!-- Chat Card -->
+                <div id="chatCard" class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="card-title">Ask a Legal Question</div>
+                    </div>
+                    <div class="card-description">
+                        Ask any legal question and get an AI-powered response based on legal knowledge.
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" class="text-input" placeholder="Type your legal question here...">
+                        <button class="btn btn-primary" onclick="sendQuery()">
+                            <i class="fas fa-paper-plane"></i>
+                            Send
+                        </button>
+                    </div>
+                    
+                    <div class="loading" id="chatLoading" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Processing your question...</span>
+                    </div>
+                    
+                    <div class="result" id="chatResult"></div>
+                </div>
+                
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <div class="results-container">
+                        <div class="results-title">
+                            <i class="fas fa-comments"></i>
+                            Chat Response
+                        </div>
+                        <div class="results-content" id="chatContent">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <h3>No Questions Asked</h3>
+                                <p>Ask a legal question to see the AI response.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/chatbot.js"></script>
+</body>
+</html>

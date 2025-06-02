@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Summarizer - LegalAI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">LegalAI</div>
+            
+            <a href="contract-review.html" class="nav-item">
+                <i class="fas fa-file-contract"></i>
+                <span class="nav-text">Contract Review</span>
+            </a>
+            
+            <a href="client-query.html" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span class="nav-text">Legal Chatbot</span>
+            </a>
+            
+            <a href="summarizer.html" class="nav-item active">
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-text">Summarization</span>
+            </a>
+            
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Document Summarizer</h1>
+                <div class="header-subtitle">AI-powered document analysis</div>
+            </div>
+            
+            <div class="content-area">
+                <!-- Summary Card -->
+                <div id="summaryCard" class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="card-title">Upload Document</div>
+                    </div>
+                    <div class="card-description">
+                        Upload a document to generate a concise summary of its key points and content.
+                    </div>
+                    
+                    <div class="file-input-wrapper">
+                        <input type="file" id="summaryFile" class="file-input" accept=".pdf,.doc,.docx,.txt">
+                        <label for="summaryFile" class="file-input-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Choose document to summarize</span>
+                        </label>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="summarizeDocument()">
+                        <i class="fas fa-search"></i>
+                        Generate Summary
+                    </button>
+                    
+                    <div class="loading" id="summaryLoading" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Summarizing document...</span>
+                    </div>
+                    
+                    <div class="result" id="summaryResult"></div>
+                </div>
+                
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <div class="results-container">
+                        <div class="results-title">
+                            <i class="fas fa-file-alt"></i>
+                            Document Summary
+                        </div>
+                        <div class="results-content" id="summaryContent">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h3>No Document Summarized</h3>
+                                <p>Upload a document to see a concise summary.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/summarizer.js"></script>
+</body>
+</html>
